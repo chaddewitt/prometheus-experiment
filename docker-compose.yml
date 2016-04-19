@@ -1,0 +1,31 @@
+cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:rw"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+prometheus:
+    container_name: prometheus-server
+    image: prom/prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - "$PWD/prometheus.yml:/prometheus.yml"
+    links:
+      - cadvisor
+    command: "-config.file=/prometheus.yml"
+grafana:
+    container_name: prometheus_ui
+    image: grafana/grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/var/lib/grafana:/var/lib/grafana" # expose the sqlite3 database in the folder /var/lib/grafana
+      # - "/etc/grafana/:/etc/grafana/" # expose the configuration files in the folder /etc/grafana/

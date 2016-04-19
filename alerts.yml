@@ -1,0 +1,7 @@
+notification_config:
+    name: "development_notification"
+    email_config:
+        email: "cdewitt@transparent.com"
+aggregation_rule:
+    repeat_rate_seconds: 300
+    notification_config_name: "development_notification"

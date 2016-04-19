@@ -17,9 +17,19 @@ prometheus:
       - "9090:9090"
     volumes:
       - "$PWD/prometheus.yml:/prometheus.yml"
+      - "$PWD/prometheus.rules:/prometheus.rules"
     links:
       - cadvisor
-    command: "-config.file=/prometheus.yml"
+    command: "-config.file=/prometheus.yml -alertmanager.url=http://10.0.2.15:9093"
+alertmanager:
+    container_name: prometheus-alert-manager
+    image: prom/alertmanager
+    restart: always
+    ports:
+      - "9093:9093"
+    volumes:
+      - "$PWD/alerts.yml:/alertmanager.yml"
+    command: "-config.file=/alertmanager.yml"
 grafana:
     container_name: prometheus_ui
     image: grafana/grafana
@@ -28,4 +38,3 @@ grafana:
       - "3000:3000"
     volumes:
       - "/var/lib/grafana:/var/lib/grafana" # expose the sqlite3 database in the folder /var/lib/grafana
-      # - "/etc/grafana/:/etc/grafana/" # expose the configuration files in the folder /etc/grafana/

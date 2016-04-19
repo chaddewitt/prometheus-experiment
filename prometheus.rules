@@ -1,0 +1,6 @@
+ALERT HighCPUAlert
+  IF sum(rate(container_cpu_usage_seconds_total{name=~".+"}[1m]) * 100) > 0
+  FOR 1m
+  WITH {}
+  SUMMARY "High Memory usage for Ubuntu container"
+  DESCRIPTION "High CPU usage for Docker containers on {{$labels.instance}} for container {{$labels.name}} (current value: {{$value}})"

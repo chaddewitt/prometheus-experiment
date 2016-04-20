@@ -1,7 +1,8 @@
 cadvisor:
-    container_name: cadvisor
+    container_name: prometheus-cadvisor
     image: google/cadvisor
     restart: always
+    net: "host"
     ports:
       - "8080:8080"
     volumes:
@@ -9,6 +10,13 @@ cadvisor:
       - "/var/run:/var/run:rw"
       - "/sys:/sys:ro"
       - "/var/lib/docker/:/var/lib/docker:ro"
+node-exporter:
+    container_name: prometheus-node-exporter
+    image: prom/node-exporter
+    restart: always
+    net: "host"
+    ports:
+      - "9100:9100"
 prometheus:
     container_name: prometheus-server
     image: prom/prometheus
@@ -30,7 +38,7 @@ alertmanager:
       - "$PWD/alerts.yml:/alertmanager.yml"
     command: "-config.file=/alertmanager.yml"
 grafana:
-    container_name: prometheus_ui
+    container_name: prometheus-ui
     image: grafana/grafana
     restart: always
     ports:

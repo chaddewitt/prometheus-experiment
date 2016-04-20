@@ -1,9 +1,9 @@
 global:
   # The smarthost and SMTP sender used for mail notifications.
-#  smtp_smarthost: '192.168.254.39:25'
-#  smtp_from: 'some_email'
-#  smtp_auth_username: 'some_email'
-#  smtp_auth_password: 'some_password'
+  smtp_smarthost: 'localhost:25'
+  smtp_from: 'some_email'
+  smtp_auth_username: 'some_email'
+  smtp_auth_password: 'some_password'
 #  # The auth token for Hipchat.
 #  hipchat_auth_token: '1234556789'
 #  # Alternative host for Hipchat.

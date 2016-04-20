@@ -1,8 +1,17 @@
 ALERT HighCPUAlert
-  IF sum(rate(container_cpu_usage_seconds_total{name=~".+"}[1m]) * 100) > 0
-  FOR 1s
+  IF sum(rate(node_cpu{mode!='idle'}[5m])) > 90
+  FOR 5m
   LABELS {severity = "critical"}
   ANNOTATIONS {
     summary = "High CPU usage on 10.0.2.15",
-    description = "Development host has been experiencing high cpu usage for more than 1 minutes.",
+    description = "Development host has been experiencing high cpu usage (> 90%) for more than 5 minutes.",
+  }
+
+ALERT HighMemoryAlert
+  IF (sum(node_memory_MemTotal - node_memory_MemAvailable) / sum(node_memory_MemTotal) * 100) > 90
+  FOR 5m
+  LABELS {severity = "critical"}
+  ANNOTATIONS {
+    summary = "High Memory usage on 10.0.2.15",
+    description = "10.0.2.15 has been experiencing high memory usage (> 90%) for more than 5 minutes.",
   }

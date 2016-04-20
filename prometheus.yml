@@ -13,4 +13,4 @@ scrape_configs:
 
   target_groups:
     # These endpoints are scraped via HTTP.
-    - targets: ['localhost:9090','localhost:8080']
+    - targets: ['localhost:9090', 'localhost:9100', 'localhost:8080']

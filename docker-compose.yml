@@ -13,13 +13,12 @@ prometheus:
     container_name: prometheus-server
     image: prom/prometheus
     restart: always
+    net: "host"
     ports:
       - "9090:9090"
     volumes:
       - "$PWD/prometheus.yml:/prometheus.yml"
       - "$PWD/prometheus.rules:/prometheus.rules"
-    links:
-      - cadvisor
     command: "-config.file=/prometheus.yml -alertmanager.url=http://10.0.2.15:9093"
 alertmanager:
     container_name: prometheus-alert-manager
